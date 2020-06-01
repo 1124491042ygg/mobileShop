@@ -19,7 +19,7 @@ public class GeneratorSqlmap
 		boolean overwrite = true;
 
 		// 指定配置文件
-		File configFile = new File("C:\\code\\vue_admin\\onlineShop\\onlineShop\\mybatis-generator\\src\\main\\resources\\generatorConfig.xml");
+		File configFile = new File("C:\\code_new\\mobileShop\\mybatis-generator\\src\\main\\resources\\generatorConfig.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);

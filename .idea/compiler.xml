@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mobileShopHome" />
         <module name="mobileShopUser" />
+        <module name="mobileShopGoods" />
         <module name="mybatis-generator" />
       </profile>
     </annotationProcessing>
@@ -17,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="mobileShopGoods" options="-parameters" />
       <module name="mobileShopHome" options="-parameters" />
       <module name="mobileShopUser" options="-parameters" />
       <module name="mybatis-generator" options="-parameters" />

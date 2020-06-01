@@ -4,72 +4,185 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <context id="testTables" targetRuntime="MyBatis3">
+
+    <context id="mysqlgenerator" targetRuntime="MyBatis3">
+        <property name="autoDelimitKeywords" value="true"/>
+        <!--可以使用``包括字段名，避免字段名与sql保留字冲突报错-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 自动生成toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 自动生成equals方法和hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <!-- 非官方插件 https://github.com/itfsw/mybatis-generator-plugin -->
+        <!-- 查询单条数据插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+        <!-- 查询结果选择性返回插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectSelectivePlugin"/>
+        <!-- Example Criteria 增强插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
+        <!-- 数据Model属性对应Column获取插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+        <!-- 逻辑删除插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
+            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
+            <property name="logicalDeleteColumn" value="deleted"/>
+            <!-- 逻辑删除-已删除值 -->
+            <property name="logicalDeleteValue" value="1"/>
+            <!-- 逻辑删除-未删除值 -->
+            <property name="logicalUnDeleteValue" value="0"/>
+        </plugin>
+
         <commentGenerator>
-            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="true"/>
+            <!--<property name="suppressAllComments" value="true"/>-->
         </commentGenerator>
-        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mobileShop?
-                                        useUnicode=true&amp;
-                                        characterEncoding=utf-8&amp;
-                                        useSSL=true&amp;
-                                        useJDBCCompliantTimezoneShift=true&amp;
-                                        useLegacyDatetimeCode=false&amp;
-                                        serverTimezone=GMT"
+
+        <!--数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mobileShop?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;verifyServerCertificate=false&amp;useSSL=false"
                         userId="root"
-                        password="root">
-        </jdbcConnection>
-        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
-            NUMERIC 类型解析为java.math.BigDecimal -->
+                        password="root"/>
+
         <javaTypeResolver>
-            <property name="forceBigDecimals" value="false" />
+            <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
 
-        <!-- targetProject:生成PO类的位置 -->
-        <javaModelGenerator targetPackage="com.mobileShop.manager.pojo"
-                            targetProject="C:\code\vue_admin\mobileShop\mobileShop\HomeSystem\src\main\java">
-            <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false" />
-            <!-- 从数据库返回的值被清理前后的空格 -->
-            <property name="trimStrings" value="true" />
-        </javaModelGenerator>
-        <!-- targetProject:mapper映射文件生成的位置 -->
-        <sqlMapGenerator targetPackage="mybatis"
-                         targetProject="C:\code\vue_admin\mobileShop\mobileShop\HomeSystem\src\main\resources">
-            <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false" />
-        </sqlMapGenerator>
-        <!-- targetPackage：mapper接口生成的位置 -->
-        <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="com.mobileShop.manager.mapper"
-                             targetProject="C:\code\vue_admin\mobileShop\mobileShop\HomeSystem\src\main\java">
-            <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false" />
-        </javaClientGenerator>
-        <!-- 指定数据库表 -->
-        <table schema="" tableName="tb_panel"></table>
-        <table schema="" tableName="tb_panel_content"></table>
-        <table schema="" tableName="tb_item"></table>
-        <table schema="" tableName="tb_item_cat"></table>
-        <table schema="" tableName="tb_item_desc"></table>
-        <table schema="" tableName="tb_item_param"></table>
-        <table schema="" tableName="tb_item_param_item"></table>
-        <table schema="" tableName="tb_order"></table>
-        <table schema="" tableName="tb_order_item"></table>
-        <table schema="" tableName="tb_order_shipping"></table>
-        <table schema="" tableName="tb_user"></table>
-        <table schema="" tableName="tb_member"></table>
-        <table schema="" tableName="tb_address"></table>
-        <table schema="" tableName="tb_role"></table>
-        <table schema="" tableName="tb_permission"></table>
-        <table schema="" tableName="tb_role_perm"></table>
-        <table schema="" tableName="tb_thanks"></table>
-        <table schema="" tableName="tb_shiro_filter"></table>
-        <table schema="" tableName="tb_base"></table>
-        <table schema="" tableName="tb_log"></table>
-        <table schema="" tableName="tb_express"></table>
-        <table schema="" tableName="tb_dict"></table>
+        <javaModelGenerator targetPackage="org.mobile.mall.db.domain" targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="org.mobile.mall.db.dao" targetProject="src/main/resources"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="org.mobile.mall.db.dao"
+                             targetProject="src/main/java"/>
+        <!--表名-->
+        <table tableName="mall_ad">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_address">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+       <!-- <table tableName="mall_admin">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="role_ids" javaType="java.lang.Integer[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonIntegerArrayTypeHandler"/>
+        </table>-->
+        <table tableName="mall_brand">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_cart">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="specifications" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
+        <table tableName="mall_category">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_collect">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_comment">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="pic_urls" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
+
+        <table tableName="mall_feedback">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="pic_urls" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
+
+        <table tableName="mall_footprint">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_goods">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="gallery" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
+        <table tableName="mall_goods_attribute">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_goods_specification">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_goods_product">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="specifications" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
+        <table tableName="mall_issue">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_keyword">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_order">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_order_goods">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="specifications" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+            <columnOverride column="comments" javaType="java.lang.Integer[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonIntegerArrayTypeHandler"/>
+
+        </table>
+        <table tableName="mall_region">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_search_history">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_storage">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_topic">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="goods" javaType="java.lang.Integer[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonIntegerArrayTypeHandler"/>
+        </table>
+        <table tableName="mall_user">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_system">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="mall_groupon_rules">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_groupon">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_coupon">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="goods_value" javaType="java.lang.Integer[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonIntegerArrayTypeHandler"/>
+        </table>
+        <table tableName="mall_coupon_user">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_role">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_permission">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_log">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_notice">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_notice_admin">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="mall_aftersale">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="pictures" javaType="java.lang.String[]"
+                            typeHandler="org.mobile.mall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
     </context>
 </generatorConfiguration>
