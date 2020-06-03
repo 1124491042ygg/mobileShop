@@ -12,6 +12,7 @@
         <module>mobileShopUser</module>
         <module>mobileShopHome</module>
         <module>mybatis-generator</module>
+        <module>trade</module>
         <module>mobileShopGoods</module>
         <module>mobileShopUtils</module>
     </modules>
