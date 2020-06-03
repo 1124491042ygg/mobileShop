@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: mobile-goods
+  profiles:
+    active: dev
+  messages:
+    encoding: UTF-8
+  datasource:
+      url: jdbc:mysql://localhost:3306/mobileShop?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource
+      druid:
+        initial-size: 10
+        max-active: 50
+        min-idle: 10
+        max-wait: 60000
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        validation-query: SELECT 1 FROM DUAL
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+        time-between-eviction-runs-millis: 60000
+        filters: stat,wall
+
+server:
+  port: 8082
+
+logging:
+  level:
+    root:  INFO
+
+pagehelper:
+  helperDialect:  mysql
+  reasonable: true
+  supportMethodsArguments:  true
+  params: count=countSql
+
+mybatis:
+  type-handlers-package: com.mobile.mall.db.mybatis
+  type-aliases-package: com.mobile.mall.db.mybatis
+  configuration:
+    map-underscore-to-camel-case: true

@@ -2,11 +2,13 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mobileShopHome" />
+        <module name="mobileShopUstis" />
         <module name="mobileShopUser" />
         <module name="mobileShopGoods" />
         <module name="mybatis-generator" />
@@ -21,6 +23,7 @@
       <module name="mobileShopGoods" options="-parameters" />
       <module name="mobileShopHome" options="-parameters" />
       <module name="mobileShopUser" options="-parameters" />
+      <module name="mobileShopUstis" options="-parameters" />
       <module name="mybatis-generator" options="-parameters" />
     </option>
   </component>
