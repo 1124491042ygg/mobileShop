@@ -7,16 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mobileShopHome" />
-     	<module name="trade" />
-        <module name="mobileShopUstis" />
-        <module name="mobileShopUser" />
-        <module name="mobileShopGoods" />
         <module name="mybatis-generator" />
+        <module name="mobileShopUser" />
+        <module name="mobileShopUtils" />
+        <module name="mobileShopUstis" />
+        <module name="mobileShopGoods" />
+        <module name="trade" />
+        <module name="mobileShopHome" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="mobileShopHome" target="1.8" />
+      <module name="mobileShopUstis" target="1.8" />
       <module name="shoppingmall" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -26,6 +27,7 @@
       <module name="mobileShopHome" options="-parameters" />
       <module name="mobileShopUser" options="-parameters" />
       <module name="mobileShopUstis" options="-parameters" />
+      <module name="mobileShopUtils" options="-parameters" />
       <module name="mybatis-generator" options="-parameters" />
       <module name="shoppingmall" options="-parameters" />
       <module name="trade" options="-parameters" />
