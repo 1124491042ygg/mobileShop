@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,5 +34,12 @@ public class GoodsController {
     public BaseResponse getAllBrand()
     {
         return ResponseUtil.okList(goodsService.allBrand());
+    }
+
+    @RequestMapping(value = "/allGoodsByBrand", method = RequestMethod.GET)
+    @ApiOperation("获取所有货品品牌")
+    public BaseResponse allGoodsByBrand(@RequestParam Integer brandId)
+    {
+        return ResponseUtil.okList(goodsService.allGoodsByBrand(brandId));
     }
 }

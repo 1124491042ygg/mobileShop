@@ -1,0 +1,6 @@
+spring:
+  messages:
+    encoding: UTF-8
+
+logging:
+  config: classpath:logback-spring.xml

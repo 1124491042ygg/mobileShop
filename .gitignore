@@ -1,2 +1,4 @@
 # Project exclude paths
 /mybatis-generator/target/
+/mobileShopUtils/target/
+/mobileShopGoods/target/classes/

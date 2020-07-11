@@ -43,3 +43,4 @@ mybatis:
   type-aliases-package: com.mobile.mall.db.mybatis
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #显示sql
